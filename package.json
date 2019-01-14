@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
+    "mdx-deck": "^1.8.2",
+    "mdx-deck-code-surfer": "^0.5.3",
+    "prism-react-renderer": "^0.1.5",
     "react-scripts": "^2.0.2"
   },
   "dependencies": {
@@ -18,7 +21,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "react-scripts test --env=node --passWithNoTests"
+    "test": "react-scripts test --env=node --passWithNoTests",
+    "slides:start": "mdx-deck slides/deck.mdx",
+    "slides:build": "mdx-deck build slides/deck.mdx",
+    "slides:pdf": "mdx-deck pdf slides/deck.mdx",
+    "slides:image": "mdx-deck screenshot slides/deck.mdx"
   },
   "browserslist": [
     ">0.2%",

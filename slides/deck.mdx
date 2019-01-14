@@ -1,0 +1,102 @@
+import { Head } from 'mdx-deck'
+import { Split } from 'mdx-deck/layouts'
+export { components } from "mdx-deck-code-surfer"
+export { default as theme } from './theme'
+
+
+<Head>
+  <title>La nouvelle API Context de React</title>
+</Head>
+
+# La nouvelle API Context de React
+
+---
+
+export default Split
+
+<section>
+
+![](https://avatars.io/twitter/antoinecellier3)
+
+### Antoine Cellier
+
+Développeur Front-End [@ZenikaNantes](https://twitter.com/ZenikaNantes)
+
+[@antoinecellier3](https://twitter.com/antoinecellier3)
+
+</section>
+
+<section>
+
+![](https://avatars.io/twitter/jutanguy)
+
+### Julien Tanguy
+
+Développeur [@Valwin](https://twitter.com/Valwin_)
+
+[@jutanguy](https://twitter.com/jutanguy)
+
+</section>
+
+---
+
+# Redux
+
+---
+
+```js Reducer
+const initialState = { /* State */ };
+
+export default function reducer(state = initialState, action){
+  switch(action.type){
+    case 'DO_SOMETHING':
+      return /* newState */
+    default:
+      return state;
+  }
+}
+----
+*
+```
+
+---
+
+```js Store
+import reducer from './reducers'
+import App from './containers/App'
+
+const middleware = [ thunk ]
+
+if (process.env.NODE_ENV !== 'production') {
+  middleware.push(createLogger())
+}
+
+const store = createStore(
+  reducer,
+  applyMiddleware(...middleware)
+)
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
+----
+*
+```
+
+---
+
+> “You might not need Redux”
+
+– Dan Abramov
+
+---
+
+# React context
+
+* 29 mars 2018: [React v16.3.0: New lifecycles and context API](https://reactjs.org/blog/2018/03/29/react-v-16-3.html)
+* 23 octobre 2018: [React v16.6.0: lazy, memo and contextType](https://reactjs.org/blog/2018/10/23/react-v-16-6.html)
+
+
