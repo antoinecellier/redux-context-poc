@@ -1,4 +1,4 @@
-import { Head } from 'mdx-deck'
+import { Head, Appear, Notes } from 'mdx-deck'
 import { Split } from 'mdx-deck/layouts'
 export { components } from "mdx-deck-code-surfer"
 export { default as theme } from './theme'
@@ -20,7 +20,8 @@ export default Split
 
 ### Antoine Cellier
 
-Développeur Front-End [@ZenikaNantes](https://twitter.com/ZenikaNantes)
+Développeur Front-End
+[@ZenikaNantes](https://twitter.com/ZenikaNantes)
 
 [@antoinecellier3](https://twitter.com/antoinecellier3)
 
@@ -32,49 +33,50 @@ Développeur Front-End [@ZenikaNantes](https://twitter.com/ZenikaNantes)
 
 ### Julien Tanguy
 
-Développeur [@Valwin](https://twitter.com/Valwin_)
+Développeur
+[@Valwin](https://twitter.com/Valwin_)
 
 [@jutanguy](https://twitter.com/jutanguy)
 
 </section>
 
----
-
-# Redux
-
----
-
-```js Reducer
-const initialState = { /* State */ };
-
-export default function reducer(state = initialState, action){
-  switch(action.type){
-    case 'DO_SOMETHING':
-      return /* newState */
-    default:
-      return state;
-  }
-}
-----
-*
-```
+<Notes>
+<h1>
+Bonjour c'est nous
+</h1>
+</Notes>
 
 ---
 
-```js Store
-import reducer from './reducers'
+![](https://raw.githubusercontent.com/reduxjs/redux/master/logo/logo-title-dark.png)
+
+<Notes>
+<h1>
+Plug Prez Julien
+</h1>
+</Notes>
+
+---
+
+# React-redux
+
+---
+
+## React-redux en pratique
+
+> “La flemme de passer mes valeurs en props partout.
+>  Je vais utiliser `connect`”
+
+– Aucun développeur _ever_
+
+---
+
+```jsx App
+import { render } from 'react-dom'
+import createStore from './redux'
 import App from './containers/App'
 
-const middleware = [ thunk ]
-
-if (process.env.NODE_ENV !== 'production') {
-  middleware.push(createLogger())
-}
-
-const store = createStore(
-  reducer,
-  applyMiddleware(...middleware)
-)
+const store = createStore()
 
 render(
   <Provider store={store}>
@@ -83,6 +85,33 @@ render(
   document.getElementById('root')
 )
 ----
+5 > createStore
+8,10 > Provider
+*
+```
+
+---
+
+```jsx Connect
+import React from 'react';
+import { connect } form 'react-redux';
+
+const TodoList = ({ todos }) => (
+  <div>
+    <ul>
+      { todos.map(t => (
+        <li key={t.id}>{t.text}</li>
+      ))}
+    </ul>
+  </div>
+);
+
+const mapStateToProps = state => ({
+  todos: state.todos
+});
+export default connect(mapStateToProps)(TodoList)
+----
+17 > Connect FTW
 *
 ```
 
@@ -94,9 +123,156 @@ render(
 
 ---
 
+```jsx Local state
+import React from 'react'
+
+class Counter extends React.Component {
+  static state = {
+    count: 0,
+  };
+
+  render() {
+    return (
+      <React.Fragment>
+        Count: {this.state.count}
+        <button onClick={() => this.setState({count:0})}>Reset</button>
+        <button onClick={() => this.setState(({count}) => ({count: count + 1}))}>+</button>
+        <button onClick={() => this.setState(({count}) => ({count: count - 1}))}>-</button>
+      </React.Fragment>
+    );
+  }
+}
+----
+11 > `this.state`
+* 
+```
+
+---
+
+> “Local state is fine”
+
+– Dan Abramov
+
+---
+
+# On a le droit de passer des props sur quelques niveaux
+
+
+---
+
+# React EE
+
+---
+
+# Context !
+
+---
+
 # React context
 
+* React a toujours eu un contexte (non documenté)
 * 29 mars 2018: [React v16.3.0: New lifecycles and context API](https://reactjs.org/blog/2018/03/29/react-v-16-3.html)
 * 23 octobre 2018: [React v16.6.0: lazy, memo and contextType](https://reactjs.org/blog/2018/10/23/react-v-16-6.html)
 
+---
 
+# App exemple
+
+* usecase
+
+---
+
+# CODE
+
+---
+
+# Récap
+
+---
+
+## Redux
+
+### Avantages
+
+* Connu
+* Écosystème
+* Peut gérer un état simple comme complexe
+* Prédictible
+
+### Inconvénients
+
+* Verbeux
+
+---
+
+## Context
+
+### Avantages
+
+* Just React
+* Sucre avec `contextType`
+
+### Inconvénients
+
+* Modèle simple
+
+---
+
+## On a pas besoin de redux pour faire du redux
+
+---
+
+```jsx useReducer
+const initialState = {count: 0};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'reset':
+      return initialState;
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+    default:
+      // A reducer must always return a valid state.
+      // Alternatively you can throw an error if an invalid action is dispatched.
+      return state;
+  }
+}
+
+function Counter({initialCount}) {
+  const [state, dispatch] = useReducer(reducer, {count: initialCount});
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({type: 'reset'})}>
+        Reset
+      </button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
+      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+    </>
+  );
+}
+----
+*
+```
+
+
+---
+
+## Conseils
+
+<ol style={{textAlign: 'left'}}>
+  <Appear>
+  <li><code>this.state</code></li>
+  <li>API context</li>
+  <li><a href="https://redux-starter-kit.js.org">Redux-starter-kit</a> ou <a href="https://github.com/alakarteio/k-redux-factory">k-redux-factory</a></li>
+  <li><a href="https://rematch.gitbooks.io/rematch">Rematch</a></li>
+  <li>Redux</li>
+  </Appear>
+</ol>
+
+
+---
+
+# Questions
