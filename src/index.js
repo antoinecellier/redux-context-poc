@@ -6,6 +6,7 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import reducer from './reducers'
 import App from './containers/App'
+import styles from './theme.module.css'
 
 const middleware = [ thunk ]
 if (process.env.NODE_ENV !== 'production') {
@@ -18,8 +19,15 @@ const store = createStore(
 )
 
 render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <div className={styles.container}>
+    <div>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </div>
+    <div>
+    </div>
+  </div>
+  ,
   document.getElementById('root')
 )
