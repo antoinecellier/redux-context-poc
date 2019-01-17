@@ -1,20 +1,29 @@
 import React, { Component } from 'react'
-import { postsStore } from '../components/Posts.context'
+import { PostsContext } from '../context/posts'
+import { ThemeContext, withThemeStore } from '../context/theme'
 import Posts from '../components/Posts'
 import Picker from '../components/Picker'
 
 class AppWithContext extends Component {
+    static contextType = PostsContext
+
     componentDidMount() {
-        this.props.fetchPosts(this.props.subreddit)
+        this.context.fetchPosts(this.context.subreddit)
     }
 
     render() {
-        const { posts, subreddit, selectedSubreddit, lastUpdated, isFetching } = this.props 
+        console.log(this.context)
+        const { posts, subreddit, fetchSubreddit, lastUpdated, isFetching } = this.context 
+        const { backgroundColor, switchBackground } = this.props
         return (
-            <div>
+            <div style={{ backgroundColor: this.props.backgroundColor }}>
                 <h2>Api context</h2>
-                <Picker value={this.props.subreddit}
-                        onChange={this.props.selectedSubreddit}
+                Change theme: <Picker value={this.props.backgroundColor}
+                        onChange={this.props.switchBackground}
+                        options={[ 'white', 'red' ]} />
+
+                <Picker value={this.context.subreddit}
+                        onChange={this.context.fetchSubreddit}
                         options={[ 'reactjs', 'frontend' ]} />
                 <p>
                 {lastUpdated &&
@@ -24,7 +33,7 @@ class AppWithContext extends Component {
                     </span>
                 }
                 {!isFetching &&
-                    <button onClick={this.handleRefreshClick}>
+                    <button onClick={this.fetchSubreddit}>
                     Refresh
                     </button>
                 }
@@ -40,4 +49,4 @@ class AppWithContext extends Component {
     }
 }
 
-export default postsStore(AppWithContext)
+export default withThemeStore(AppWithContext)

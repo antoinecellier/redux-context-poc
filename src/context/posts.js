@@ -1,6 +1,6 @@
 import React, { createContext, Component } from 'react'
 
-const PostsContext = createContext({
+export const PostsContext = createContext({
     posts: [],
     subreddit: '',
     isFetching: false,
@@ -20,7 +20,7 @@ class PostsProvider extends Component {
         posts: [],
         subreddit: 'reactjs',
         isFetching: false,
-        selectedSubreddit: (subreddit) => this.fetchPosts(subreddit)
+        fetchSubreddit: (subreddit) => this.fetchPosts(subreddit)
     }
 
     fetchPosts = (subreddit) => {

@@ -7,10 +7,10 @@ import { createLogger } from 'redux-logger'
 import reducer from './reducers'
 import App from './containers/App'
 import AppWithContext from './containers/AppWithContext'
-import PostsProvider from './components/Posts.context'
+import PostsProvider from './context/posts'
+import ThemeProvider from './context/theme'
 import styles from './theme.module.css';
 
-console.log(styles)
 const middleware = [ thunk ]
 if (process.env.NODE_ENV !== 'production') {
   middleware.push(createLogger())
@@ -29,9 +29,11 @@ render(
     </Provider>
     </div>
     <div>
-    <PostsProvider>
-      <AppWithContext />
-    </PostsProvider>
+    <ThemeProvider>
+      <PostsProvider>
+        <AppWithContext />
+      </PostsProvider>
+    </ThemeProvider>
     </div>
   </div>,
   document.getElementById('root')
