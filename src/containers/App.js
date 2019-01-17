@@ -43,6 +43,7 @@ class App extends Component {
     const isEmpty = posts.length === 0
     return (
       <div>
+        <h2>Redux</h2>
         <Picker value={selectedSubreddit}
                 onChange={this.handleChange}
                 options={[ 'reactjs', 'frontend' ]} />
